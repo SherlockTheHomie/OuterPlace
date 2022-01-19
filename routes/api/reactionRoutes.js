@@ -6,9 +6,9 @@ const {
 } = require('../../controllers/reactionController');
 
 // /api/students/:userId/thoughts/:assignmentId
-router.route('/reactions').post(createReaction);
+router.route('/:thoughtid/reactions').post(createReaction);
 
-router.route('/reactions').delete(deleteReaction)
+router.route('/thoughtid/reactions').delete(deleteReaction);
 
 
 module.exports = router;

@@ -12,7 +12,7 @@ module.exports = {
       },
 
     deleteReaction(req, res) {
-        Reaction.create(req.body)
+        Reaction.delete(req.body)
           .then((reaction) => res.json(reaction))
           .catch((err) => {
             console.log(err);

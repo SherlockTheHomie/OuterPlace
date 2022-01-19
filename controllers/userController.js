@@ -33,6 +33,23 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
+
+  updateUserById(req, res) {
+    User.findOne({ _id: req.params.userId })
+      .select('-__v')
+      .lean()
+      .then(async (user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : res.json({
+              user,
+            })
+      )
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
   // create a new student
   createUser(req, res) {
     User.create(req.body)

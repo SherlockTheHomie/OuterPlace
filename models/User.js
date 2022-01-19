@@ -20,11 +20,16 @@ const userSchema = new Schema(
         ref: 'thought',
       },
     ],
-    friends: [this],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref:'User'
+      }
+  ],
   },
   {
     toJSON: {
-      virtuals: true,
+      getters: true,
     },
     id: false,
   }

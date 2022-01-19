@@ -32,10 +32,10 @@ module.exports = {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : User.deleteMany({ _id: { $in: thought.users } })
+          ? res.status(404).json({ message: 'That thought does not exist' })
+          : User.deleteOne({ _id: { $in: thought.users } })
       )
-      .then(() => res.json({ message: 'Course and students deleted!' }))
+      .then(() => res.json({ message: 'Your thought has been deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a course
@@ -47,7 +47,7 @@ module.exports = {
     )
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No course with this id!' })
+          ? res.status(404).json({ message: 'No thought like this exists!' })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
