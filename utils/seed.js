@@ -13,7 +13,7 @@ connection.once("open", async () => {
   // Drop existing thoughts
   await Thought.deleteMany({});
 
-  let friend = await User.insertMany([]);
+  let friend = await User.create([]);
 
   let reaction = [
     {
@@ -70,7 +70,7 @@ connection.once("open", async () => {
     },
 ]);
   // Create the users
-  await User.create(
+  const users = await User.create(
     {
       username: "TerranceTheMachine",
       email: "afterdarkmuffins@gmail.com",
@@ -103,11 +103,13 @@ connection.once("open", async () => {
     },
   );
 
+console.log(users);
+
 friend = [
   User[0], User[1], User[2], User[3], User[4],
 ];
 
-
+console.log(friend);
 
   process.exit();
 });

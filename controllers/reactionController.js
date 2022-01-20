@@ -1,22 +1,20 @@
-const { Reaction } = require('../models');
+const { Reaction, Thought } = require('../models');
 
 module.exports = {
 
     createReaction(req, res) {
-        Reaction.create(req.body)
+      const filter = { _id: req.params.thoughtId };  
+      const update = { $addToSet: { reactions: req.body } };
+      Thought.findOneAndUpdate(filter, update, { runValidators: true, new: true})
           .then((reaction) => res.json(reaction))
-          .catch((err) => {
-            console.log(err);
-            return res.status(500).json(err);
-          });
+          .catch((err) => res.status(500).json(err));
       },
 
     deleteReaction(req, res) {
-        Reaction.delete(req.body)
+      const filter = { _id: req.params.thoughtId };  
+      const update = { $pull: { reactions: req.params.reactionId } };
+      Thought.findOneAndUpdate(filter, update, { runValidators: true, new: true})
           .then((reaction) => res.json(reaction))
-          .catch((err) => {
-            console.log(err);
-            return res.status(500).json(err);
-          });
+          .catch((err) => res.status(500).json(err));
       },
 }

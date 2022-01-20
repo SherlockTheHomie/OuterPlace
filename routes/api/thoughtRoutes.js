@@ -1,7 +1,4 @@
 const router = require('express').Router();
-const reactionRoutes = require('./reactionRoutes');
-
-router.use('/thoughts/:thoughtid/reactions', reactionRoutes);
 
 const {
   getAllThoughts,
@@ -14,13 +11,23 @@ const {
 // /api/courses
 router.route('/').get(getAllThoughts).post(createThought);
 
-router.route('/:userId/thoughts').post(createThought);
+router.route('/:userId').post(createThought);
+
+router.route('/thoughtId').get(getThoughtById).put(updateThoughtById);
+// /api/students/:userId/thoughts/:assignmentId
+router.route('/:thoughtId').delete(deleteThoughtById);
+
+const {
+  createReaction,
+  deleteReaction,
+} = require('../../controllers/reactionController');
 
 // /api/students/:userId/thoughts/:assignmentId
-router.route('/:userId/thoughts/:thoughtId').delete(deleteThoughtById);
+router.route('/:thoughtId/reactions').post(createReaction);
+
+router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction);
 
 
-// /api/courses/:courseId
 router
   .route('/:thoughtId')
   .get(getThoughtById)
